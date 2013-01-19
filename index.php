@@ -21,7 +21,7 @@
 	
 	if (!$query->num_rows)
 	{
-		$parts = explode('\n', $body);
+		$parts = explode("\n", $body);
 		
 		if (count($parts) == 4)
 		{
@@ -37,7 +37,7 @@
 				respond('Registration failed.');
 		}
 		else
-			respond('You need to register for RefUnited. Reply with these details, each separated by a new line.\n\nFirst name\nLast name\nAge\nGender (M/F)');
+			respond("You need to register for RefUnited. Reply with these details, each separated by a new line.\n\nFirst name\nLast name\nAge\nGender (M/F)");
 	}
 	
 	$db->close();
