@@ -48,7 +48,7 @@
 			case 'search':
 				$query = $db->query("SELECT * FROM users WHERE number <> '$from'");
 				
-				while ($row = $result->fetch_row())
+				while ($row = $query->fetch_row())
 				{
 					$sms = $client->account->sms_messages->create(
 						'+442033229191',
