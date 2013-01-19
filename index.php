@@ -5,14 +5,13 @@
 		echo '<?xml version="1.0" encoding="UTF-8"?><Response><Sms>'.$body.'</Sms></Response>';
 	}
 	
+	require('lib/Twilio.php');
+	$twilio = new Services_Twilio('ACa4435bbbdc9345a589be43e4f9924027', '273569f71f594bfee347a71c2d9c51c5');
+	
 	// Request
 	$from = $_POST['From'];
 	$to = $_POST['To'];
 	$body = $_POST['Body'];
-	
-	// Validate
-	if (!is_numeric($from)) die();
-	if (!is_numeric($to)) die();
 	
 	// Database
 	$db = new mysqli('localhost', 'root', 'root', 'rambo');
@@ -41,26 +40,54 @@
 	}
 	else
 	{
-		$parts = explode(" ", $body, 2);
+		$user = $user->fetch_row();
+		$parts = explode(' ', $body, 2);
 		
 		switch (strtolower($parts[0]))
 		{
 			case 'search':
-				//CODE goes here
-
-
-				break;
-
-			case 'ping':
-				respond("pong!");
-				break;
-
-			case 'sudocow':
-				respond("Moo!");
+				$query = $db->query("SELECT * FROM users WHERE number <> '$from'");
+				
+				while ($row = $result->fetch_row())
+				{
+					$sms = $client->account->sms_messages->create(
+						'+442033229191',
+						$row[0],
+						"Do you know $user[1] $user[2]? If you do, reply CONFIRM followed by a question only $user[1] would know the answer to."
+					);
+				}
 				break;
 			
+			case 'confirm':
+				$sms = $client->account->sms_messages->create(
+						'+442033229191',
+						'+447857698335',
+						"Security question. Reply ANSWER followed by your answer.\n\n$parts[1]"
+					);
+				break;
+			
+			case 'answer':
+				$sms = $client->account->sms_messages->create(
+						'+442033229191',
+						'+447842073150',
+						"James responded with this answer. Reply APPROVE to approve connection.\n\n$parts[1]"
+					);
+				break;
+			
+			case 'approve':
+				$sms = $client->account->sms_messages->create(
+						'+442033229191',
+						'+447857698335',
+						"Your connection request was approved."
+					);
+				break;
+			
+			case 'ping':
+				respond('pong!');
+				break;
+
 			default:
-				respond('Please enter a valid command: search, ping');
+				respond('Please enter a valid command: search');
 				break;
 		}
 	}	
