@@ -46,13 +46,17 @@
 		switch (strtolower($parts[0]))
 		{
 			case 'search':
-				
-				//code here to search
+				//CODE goes here
+
 
 				break;
 
 			case 'ping':
 				respond("pong!");
+				break;
+
+			case 'sudocow':
+				respond("Moo!");
 				break;
 			
 			default:
