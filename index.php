@@ -50,7 +50,7 @@
 				
 				while ($row = $query->fetch_row())
 				{
-					$sms = $client->account->sms_messages->create(
+					$sms = $twilio->account->sms_messages->create(
 						'+442033229191',
 						$row[0],
 						"Do you know $user[1] $user[2]? If you do, reply CONFIRM followed by a question only $user[1] would know the answer to."
@@ -59,7 +59,7 @@
 				break;
 			
 			case 'confirm':
-				$sms = $client->account->sms_messages->create(
+				$sms = $twilio->account->sms_messages->create(
 						'+442033229191',
 						'+447857698335',
 						"Security question. Reply ANSWER followed by your answer.\n\n$parts[1]"
@@ -67,7 +67,7 @@
 				break;
 			
 			case 'answer':
-				$sms = $client->account->sms_messages->create(
+				$sms = $twilio->account->sms_messages->create(
 						'+442033229191',
 						'+447842073150',
 						"James responded with this answer. Reply APPROVE to approve connection.\n\n$parts[1]"
@@ -75,7 +75,7 @@
 				break;
 			
 			case 'approve':
-				$sms = $client->account->sms_messages->create(
+				$sms = $twilio->account->sms_messages->create(
 						'+442033229191',
 						'+447857698335',
 						"Your connection request was approved."
