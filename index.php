@@ -17,9 +17,9 @@
 	// Database
 	$db = new mysqli('localhost', 'root', 'root', 'rambo');
 	
-	$query = $db->query('SELECT * FROM users WHERE number = ' . $from);
+	$user = $db->query("SELECT * FROM users WHERE number = '$from'");
 	
-	if (!$query->num_rows)
+	if (!$user->num_rows)
 	{
 		$parts = explode("\n", $body);
 		
@@ -31,7 +31,7 @@
 			$birthyear = date('Y', strtotime($parts[2] . ' years ago'));
 			$gender = $db->real_escape_string($parts[3]);
 			
-			if ($db->query("INSERT INTO users (number, firstname, lastname, birthyear, gender) VALUES ($number, '$firstname', '$lastname', $birthyear, '$gender')") === TRUE)
+			if ($db->query("INSERT INTO users (number, firstname, lastname, birthyear, gender) VALUES ('$number', '$firstname', '$lastname', $birthyear, '$gender')") === TRUE)
 				respond('You have been registered - welcome to RefUnited.');
 			else
 				respond('Registration failed.');
