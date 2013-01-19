@@ -56,6 +56,8 @@
 						"Do you know $user[1] $user[2]? If you do, reply CONFIRM followed by a question only $user[1] would know the answer to."
 					);
 				}
+				
+				respond('Your search has been distributed.');
 				break;
 			
 			case 'confirm':
@@ -80,6 +82,8 @@
 						'+447857698335',
 						"Your connection request was approved."
 					);
+				
+				respond('You are now connected.');
 				break;
 			
 			case 'ping':
