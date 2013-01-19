@@ -10,10 +10,6 @@
 	$to = $_POST['To'];
 	$body = $_POST['Body'];
 	
-	// Validate
-	if (!is_numeric($from)) die();
-	if (!is_numeric($to)) die();
-	
 	// Database
 	$db = new mysqli('localhost', 'root', 'root', 'rambo');
 	
