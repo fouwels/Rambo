@@ -39,5 +39,25 @@
 		else
 			respond("You need to register for RefUnited. Reply with these details, each separated by a new line.\n\nFirst name\nLast name\nAge\nGender (M/F)");
 	}
-	
+	else
+	{
+		$parts = explode(" ", $body, 2);
+		
+		switch (strtolower($parts[0]))
+		{
+			case 'search':
+				
+				//code here to search
+
+				break;
+
+			case 'ping':
+				respond("pong!");
+				break;
+			
+			default:
+				respond('Please enter a valid command: search, ping');
+				break;
+		}
+	}	
 	$db->close();
